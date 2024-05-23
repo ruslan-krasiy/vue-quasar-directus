@@ -1,3 +1,8 @@
+### DB PAnel
+
+http://localhost:8055/admin/login
+
+
 ### Requisitos para la Prueba Técnica de Desarrollo con Quasar y Directus
 
 #### Objetivo

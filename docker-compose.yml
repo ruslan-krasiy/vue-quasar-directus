@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  paw-frontend:
+    container_name: paw-frontend
+    image: node:16-alpine
+    working_dir: /app
+    restart: always
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "8080:8080"
+    command: 
+      ["ash", "-c", "npm install && npm run dev"]
+
+  paw-directus:
+    container_name: paw-directus
+    image: directus/directus:latest
+    ports:
+      - "8055:8055"
+    volumes:
+      - ./directus/uploads:/directus/uploads
+      - ./directus/extensions:/directus/extension
+    depends_on:
+      - paw-postgres
+    environment:
+      KEY: "255d861b-5ea1-5996-9aa3-922530ec40b1"
+      SECRET: "6116487b-cda1-52c2-b5b5-c8022c45e263"
+       
+      DATABASE_CLIENT: pg
+      DATABASE_HOST: postgres
+      DATABASE_PORT: 5432
+      DATABASE_USER: directus
+      DATABASE_PASSWORD: directus
+      DATABASE_DATABASE: directus
+
+      ADMIN_EMAIL: "ruslan.krasiy@alten.es"
+      ADMIN_PASSWORD: "d1r3ctu5"
+
+
+      # PUBLIC_URL: "https://directus.example.com"
+
+  paw-postgres:
+    container_name: paw-postgres
+    image: postgis/postgis:13-master
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+    environment:
+      POSTGRES_USER: "directus"
+      POSTGRES_PASSWORD: "directus"
+      POSTGRES_DB: "directus"
+    
+volumes:
+  pgdata:
