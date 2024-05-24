@@ -14,6 +14,7 @@ const { configure } = require('quasar/wrappers');
 
 module.exports = configure(function (/* ctx */) {
   return {
+    supportTS: true,
     // https://v2.quasar.dev/quasar-cli-vite/prefetch-feature
     // preFetch: true,
 
@@ -21,8 +22,8 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
-      
-      
+
+
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

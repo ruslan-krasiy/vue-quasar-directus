@@ -7,6 +7,7 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 /*
  * If not building with SSR mode, you can
@@ -30,6 +31,31 @@ export default route(function (/* { store, ssrContext } */) {
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     history: createHistory(process.env.VUE_ROUTER_BASE),
+  });
+
+  const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const removeListener = onAuthStateChanged(
+        getAuth(),
+        (user)=>{
+          removeListener();
+          resolve(user)
+        },
+        reject
+      )
+    })
+  }
+
+  Router.beforeEach(async (to, from, next) => {
+    if(to.matched.some((record) => record.meta.requiresAuth)){
+      if(await getCurrentUser()){
+        next();
+      }else{
+        next('/sign-in')
+      }
+    }else{
+      next()
+    }
   });
 
   return Router;
