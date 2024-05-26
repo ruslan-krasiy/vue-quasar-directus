@@ -2,6 +2,10 @@
   import useSignIn from '../../composable/useSignIn';
 
   const {email, password, error, submit} = useSignIn();
+
+  defineOptions({
+    name: 'SignInForm'
+  });
 </script>
 
 <template>

@@ -10,4 +10,8 @@
 
 <script setup lang="ts">
 import RegisterForm from 'src/components/register/register-form.vue';
+
+defineOptions({
+  name: 'RegisterPage'
+});
 </script>

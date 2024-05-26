@@ -7,7 +7,7 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { auth } from 'src/firebase-config';
 
 /*
  * If not building with SSR mode, you can
@@ -35,8 +35,7 @@ export default route(function (/* { store, ssrContext } */) {
 
   const getCurrentUser = () => {
     return new Promise((resolve, reject) => {
-      const removeListener = onAuthStateChanged(
-        getAuth(),
+      const removeListener = auth.onAuthStateChanged(
         (user)=>{
           removeListener();
           resolve(user)

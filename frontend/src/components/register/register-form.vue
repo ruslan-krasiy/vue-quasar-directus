@@ -10,6 +10,10 @@ import useRegister from 'src/composable/useRegister';
     validateEmail,
     error,
   } = useRegister();
+
+  defineOptions({
+    name: 'RegisterForm'
+  });
 </script>
 
 <template>

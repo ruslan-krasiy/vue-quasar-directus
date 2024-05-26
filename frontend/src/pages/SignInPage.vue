@@ -11,4 +11,8 @@
 
 <script setup lang="ts">
 import SignInForm from 'src/components/sign-in/sign-in-form.vue';
+
+defineOptions({
+  name: 'SignInPage'
+});
 </script>
