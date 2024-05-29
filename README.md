@@ -72,11 +72,13 @@ Now you can access:
 - Frontend: https://localhost
 
     ![frontend](screenshots/front-end.png)
-&nbsp;
+
 - API endpoint
+
     ![API](screenshots/api-call.png)
-&nbsp;
+
 - Direcus
+
     ![backend](screenshots/directus.png)
 
 &nbsp;
@@ -160,6 +162,11 @@ Configuration for FireBase is located in `./frontend/src/boot/firebase.ts`.
   
   And to see the logs, we will use the name associated to the docker container, for the case of paw-directus we will run: `docker logs -f --tail 100 paw-directus`
 
+&nbsp;
+
+----
+
+&nbsp;
 
 ### Decisions 
 
