@@ -7,8 +7,7 @@ import {
 } from 'vue-router';
 
 import routes from './routes';
-import { auth } from 'src/firebase-config';
-
+import { auth } from 'boot/firebase';
 /*
  * If not building with SSR mode, you can
  * directly export the Router instantiation;
@@ -46,13 +45,18 @@ export default route(function (/* { store, ssrContext } */) {
   }
 
   Router.beforeEach(async (to, from, next) => {
+    const user = await getCurrentUser();
+
     if(to.matched.some((record) => record.meta.requiresAuth)){
-      if(await getCurrentUser()){
+      if(user){
         next();
       }else{
         next('/sign-in')
       }
     }else{
+      if(user){
+        return next({path:'/'});
+      }
       next()
     }
   });

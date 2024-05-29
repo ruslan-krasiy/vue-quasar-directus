@@ -8,7 +8,6 @@ import useRegister from 'src/composable/useRegister';
     repeatPassword,
     submit,
     validateEmail,
-    error,
   } = useRegister();
 
   defineOptions({
@@ -75,7 +74,6 @@ import useRegister from 'src/composable/useRegister';
     <p class="q-mt-md">If you already have an account just <router-link to="sign-in">Sign in</router-link></p>
   </q-form>
   </div>
-  <p v-if="error">{{ error }}</p>
 </template>
 
 <style>

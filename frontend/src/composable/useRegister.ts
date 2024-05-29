@@ -1,8 +1,9 @@
 import { FirebaseError } from 'firebase/app';
-import {getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
+import {auth} from 'boot/firebase';
+import {createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import { Notify } from 'quasar';
 interface UseRegiserType {
   email: Ref
   fullname: Ref
@@ -30,22 +31,23 @@ const useRegister = ():UseRegiserType => {
     error.value = null;
 
     try{
-      const response = await createUserWithEmailAndPassword(getAuth(), email.value, password.value);
+      const response = await createUserWithEmailAndPassword(auth, email.value, password.value);
       if(response){
-        const user = await getAuth().currentUser;
-        console.log({user})
+        const user = auth.currentUser;
         if(user){
           await updateProfile(user, {
             displayName: fullname.value
           });
 
+          Notify.create({
+            message: 'Your account has been created',
+            type: 'positive'
+          });
           router.push('/')
         }
       }
-      console.log(response);
     }catch(err){
       const _error = err  as FirebaseError
-      console.log(_error.code)
       if(_error.code === 'auth/weak-password')
         error.value = 'Password should be at least 6 characters'
     }

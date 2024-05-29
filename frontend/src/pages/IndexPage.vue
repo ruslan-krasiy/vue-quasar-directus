@@ -1,9 +1,25 @@
 <template>
   <q-page class='row items-center justify-evenly'>
-    <p v-if="state.loading">loading</p>
-    <PublicationItem :item="publication" v-for="publication in state.data" :key="publication.id" />
+    <q-inner-loading
+        :showing="state.loading"
+        label="Please wait..."
+        label-class="text-teal"
+        label-style="font-size: 1.1em"
+      />
+    <div class="publications q-pb-md">
+      <PublicationItem :item="publication" v-for="publication in state.data" :key="publication.id" />
+    </div>
   </q-page>
 </template>
+
+<style>
+.publications{
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+</style>
 
 <script setup lang='ts'>
 import useAllPublications from 'src/composable/useGetAllPublications';

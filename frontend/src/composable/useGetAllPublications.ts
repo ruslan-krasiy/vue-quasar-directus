@@ -1,4 +1,4 @@
-import getData, { RequestError } from 'src/api/api';
+import apiGet, { RequestError } from 'src/api/api';
 import { Publication } from 'src/interfaces/publication.interface';
 import { reactive } from 'vue';
 
@@ -19,7 +19,7 @@ const useAllPublications = ():{state: UseAllPublicationsType, fetchData: () => P
   const fetchData = async () => {
     state.loading = true;
     try {
-      const data = await getData<Publication[]>('publications');
+      const data = await apiGet<Publication[]>('publications');
       state.data = data;
     } catch (err) {
       const error = err as RequestError;

@@ -1,14 +1,20 @@
 
-async function getData<T>(from: string, method?: 'GET' | 'POST' | 'PUT' | 'DELETE'):Promise<T> {
+async function apiGet<T>(from: string, method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH', body?: T):Promise<T> {
+  const options = {
+    headers:{
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${process.env.API_KEY}`
+    },
+    method: method || 'GET'
+  }
+
+  if(body){
+    Object.assign(options, {body: JSON.stringify(body)})
+  }
+
 
   try{
-    const response = await fetch(`${process.env.BASE_URL}/api/items/${from}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.API_KEY}`
-      },
-      method: method || 'GET'
-    });
+    const response = await fetch(`/api/items/${from}`, options);
     if(response.status === 200){
       const {data} = await response.json();
       return data as T;
@@ -35,4 +41,4 @@ export class RequestError extends Error {
 	}
 };
 
-export default getData;
+export default apiGet;

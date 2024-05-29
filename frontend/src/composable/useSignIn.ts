@@ -1,13 +1,12 @@
-import { FirebaseError } from 'firebase/app';
-import {getAuth, signInWithEmailAndPassword} from 'firebase/auth';
+import {signInWithEmailAndPassword} from 'firebase/auth';
+import { auth} from 'boot/firebase';
 import { Ref, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-
+import { Notify } from 'quasar'
 interface UseSignInType {
   email: Ref
   password: Ref
-  error: Ref
   submit(): void
 }
 const useSignIn = ():UseSignInType => {
@@ -18,31 +17,22 @@ const useSignIn = ():UseSignInType => {
   const error = ref<string | null>(null);
 
   const submit = async () => {
-    console.log('Submit Login:');
-
-
     error.value = null;
 
     try{
-      const auth = getAuth();
       const response = await signInWithEmailAndPassword(auth, email.value, password.value);
       if(response){
-        console.log('Logged in');
+        Notify.create({
+          message: 'Sign-in confirmed',
+          type: 'positive'
+        })
         router.push('/');
       }
-      console.log(response);
     }catch(err){
-      const _error = err  as FirebaseError
-      console.log(_error.code)
-      error.value = 'Your email address or password are incorrect'
-      // if(_error.code === 'auth/invalid-email')
-      //   error.value = 'Your email address or password are incorrect'
-      // if(_error.code === 'auth/user-not-found')
-      //   error.value = 'Password should be at least 6 characters'
-      // if(_error.code === 'auth/wrong-password')
-      //   error.value = 'Your email address or password are incorrect'
-      // if(_error.code === 'auth/user-disabled')
-      //   error.value = 'Password should be at least 6 characters'
+      Notify.create({
+        message: 'Your email with your password is wrong',
+        type: 'negative'
+      });
     }
   };
 
@@ -50,7 +40,6 @@ const useSignIn = ():UseSignInType => {
     email,
     password,
     submit,
-    error
   }
 }
 

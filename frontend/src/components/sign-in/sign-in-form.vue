@@ -1,7 +1,7 @@
 <script setup lang='ts'>
   import useSignIn from '../../composable/useSignIn';
 
-  const {email, password, error, submit} = useSignIn();
+  const {email, password, submit} = useSignIn();
 
   defineOptions({
     name: 'SignInForm'
@@ -18,7 +18,6 @@
     </div>
   </q-form>
   </div>
-  <p v-if="error">{{ error }}</p>
 </template>
 
 <style>

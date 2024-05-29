@@ -7,5 +7,5 @@ export interface Publication {
   content:      string;
   autor:        string;
   image:        null | string;
-  likes:        number;
+  likes:        string[] | null;
 }

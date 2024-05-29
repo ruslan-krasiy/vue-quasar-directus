@@ -38,19 +38,22 @@ services:
       - ./extensions:/directus/extension
     depends_on:
       - paw-postgres
+    env_file:
+      - ./.env
     environment:
-      KEY: "255d861b-5ea1-5996-9aa3-922530ec40b1"
-      SECRET: "6116487b-cda1-52c2-b5b5-c8022c45e263"
+      KEY: ${DIRECTUS_KEY}
+      SECRET: ${DIRECTUS_SECRET}
        
       DATABASE_CLIENT: pg
       DATABASE_HOST: postgres
       DATABASE_PORT: 5432
-      DATABASE_USER: directus
-      DATABASE_PASSWORD: directus
-      DATABASE_DATABASE: directus
 
-      ADMIN_EMAIL: "ruslan.krasiy@alten.es"
-      ADMIN_PASSWORD: "d1r3ctu5"
+      DATABASE_USER: ${DIRECTUS_DATABASE_USER}
+      DATABASE_PASSWORD: ${DIRECTUS_DATABASE_PASSWORD}
+      DATABASE_DATABASE: ${DIRECTUS_DATABASE_DATABASE}
+
+      ADMIN_EMAIL: ${DIRECTUS_ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${DIRECTUS_ADMIN_PASSWORD}
 
       CACHE_ENABLED: "true"
       CACHE_STORE: "redis"
@@ -65,9 +68,9 @@ services:
       - pgdata:/var/lib/postgresql/data
 
     environment:
-      POSTGRES_USER: "directus"
-      POSTGRES_PASSWORD: "directus"
-      POSTGRES_DB: "directus"
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     
 volumes:
   pgdata:
